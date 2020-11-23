@@ -3,12 +3,12 @@
  * @version: 
  * @Author: xuml31350
  * @Date: 2020-11-18 19:55:10
- * @LastEditors: xuml31350
- * @LastEditTime: 2020-11-23 17:26:05
+ * @LastEditors: xml
+ * @LastEditTime: 2020-11-23 22:08:51
  */
-import { concatLastModifyTime } from '../../commonUtils/utils'
+import * as Koa from 'koa'
+import commonUtils from '../../common/common.utils'
 import userSql from '../../../mysql/user/user.sql'
-import * as Koa from "koa"
 
 
 export default class userService {
@@ -19,13 +19,14 @@ export default class userService {
    * @param {Koa} ctx
    * @return {*}
    */
-  static async insertUser(ctx: any) {
-    const lastModifyTime = concatLastModifyTime();
-    let data = ctx.request.body;
-    await userSql.insertUser({
-      ...data,
+  static async insertUser(ctx: Koa.Context, next: Koa.Next) {
+    const lastModifyTime = commonUtils.getNowTime();
+    let params  = ctx.request.body;
+    let data = await userSql.insertUser({
+      ...params,
       'last_modified': lastModifyTime
     })
+    return data
   }
 
   /**
@@ -35,7 +36,7 @@ export default class userService {
    * @return {*}
    */
   static async queryUser(ctx: any) {
-    const data = await userSql.queryUser();
-    ctx.response.body = data;
+    let data: object[] =  await userSql.queryUser();
+    return data
   }
 } 

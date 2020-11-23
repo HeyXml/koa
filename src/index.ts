@@ -3,11 +3,12 @@
  * @version: 
  * @Author: xuml31350
  * @Date: 2020-11-18 09:04:30
- * @LastEditors: xuml31350
- * @LastEditTime: 2020-11-23 17:37:03
+ * @LastEditors: xml
+ * @LastEditTime: 2020-11-23 21:53:05
  */
 // const Koa = require('koa');
 import Koa from "koa"
+const Router = require('koa-router')
 const path = require('path')
 // 解析提交的表单信息
 const bodyParser = require("koa-bodyparser")
@@ -16,14 +17,15 @@ const session =  require("koa-session-minimal")
 const MysqlStore = require("koa-mysql-session")
 // 数据库配置
 import config from "./config/default.config.js"
-
-import { useControllers } from 'koa-controllers';
+import routerRegister from './router/index'
+import routerResponse from './middlewares/common/router.response'
 
 const staticCache = require('koa-static-cache')
 
 
 const app = new Koa()
-
+const router = new Router();
+app.use(routerResponse(null));
 
 // session存储配置
 const sessionMysqlConfig = {
@@ -45,26 +47,19 @@ app.use(session({
 //   path.join(__dirname , './public')
 // ))
 // 缓存
-app.use(staticCache(path.join(__dirname, './public'), { dynamic: true }, {
+app.use(staticCache(path.join(__dirname, './src/public'), { dynamic: true }, {
   maxAge: 365 * 24 * 60 * 60
 }))
-app.use(staticCache(path.join(__dirname, './images'), { dynamic: true }, {
+app.use(staticCache(path.join(__dirname, './src/images'), { dynamic: true }, {
   maxAge: 365 * 24 * 60 * 60
 }))
 
-// 配置服务端模板渲染引擎中间件
-// app.use(views(path.join(__dirname, './views'), {
-//   extension: 'ejs'
-// }))
 app.use(bodyParser({
   formLimit: '1mb'
 }))
 
-useControllers(app, __dirname + '/src/middlewares/controller/*.ts', {
-  multipart: {
-    dest: './uploads'
-  }
-});
+routerRegister(app, router);
+
 
 app.listen(config.port)
 
