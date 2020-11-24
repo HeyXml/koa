@@ -3,12 +3,12 @@
  * @version: 
  * @Author: xuml31350
  * @Date: 2020-11-18 09:04:30
- * @LastEditors: xml
- * @LastEditTime: 2020-11-23 21:53:05
+ * @LastEditors: xuml31350
+ * @LastEditTime: 2020-11-24 17:44:30
  */
 // const Koa = require('koa');
-import Koa from "koa"
-const Router = require('koa-router')
+const Koa = require("koa")
+const router = require('koa-router')()
 const path = require('path')
 // 解析提交的表单信息
 const bodyParser = require("koa-bodyparser")
@@ -16,16 +16,15 @@ const bodyParser = require("koa-bodyparser")
 const session =  require("koa-session-minimal")
 const MysqlStore = require("koa-mysql-session")
 // 数据库配置
-import config from "./config/default.config.js"
-import routerRegister from './router/index'
+import config from "./config/default.config"
+import routerRegister from './router/router.index'
 import routerResponse from './middlewares/common/router.response'
 
 const staticCache = require('koa-static-cache')
 
 
 const app = new Koa()
-const router = new Router();
-app.use(routerResponse(null));
+app.use(routerResponse({}));
 
 // session存储配置
 const sessionMysqlConfig = {

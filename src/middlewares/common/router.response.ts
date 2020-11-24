@@ -1,8 +1,8 @@
 /*
  * @Author: xml
  * @Date: 2020-11-23 21:23:24
- * @LastEditors: xml
- * @LastEditTime: 2020-11-23 22:10:36
+ * @LastEditors: xuml31350
+ * @LastEditTime: 2020-11-24 17:44:02
  * @Description: file content
  */
 import * as Koa from "koa"
@@ -12,7 +12,7 @@ interface RouterResponse {
 }
 
 export default (option: any): RouterResponse => {
-  return (ctx: Koa.Context, next: Koa.Next) =>  {
+  return async (ctx: Koa.Context, next: Koa.Next) =>  {
     /**
      * @Author: xml
      * @description: 成功处理数据
@@ -22,7 +22,7 @@ export default (option: any): RouterResponse => {
      */
     ctx.success = (data: any) => {
       ctx.type = option.type || 'json'
-      ctx.body = {
+      ctx.response.body = {
           code : option.successCode || 200,
           msg : option.successMsg || 'success',
           data : data
@@ -44,6 +44,6 @@ export default (option: any): RouterResponse => {
       }
     }
 
-    next()
+    await next()
   }
 }

@@ -3,13 +3,14 @@
  * @version: 
  * @Author: xuml31350
  * @Date: 2020-11-18 19:08:53
- * @LastEditors: xml
- * @LastEditTime: 2020-11-23 22:08:07
+ * @LastEditors: xuml31350
+ * @LastEditTime: 2020-11-24 16:26:02
  */
-import { createPool } from 'mysql';
-import config from '../config/default.config.js'
+const mysql = require('mysql')
+// import { createPool } from 'mysql';
+import config from '../config/default.config'
 
-const pool  = createPool({
+const pool  = mysql.createPool({
   host     : config.database.HOST,
   user     : config.database.USERNAME,
   password : config.database.PASSWORD,

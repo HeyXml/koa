@@ -1,8 +1,8 @@
 /*
  * @Author: xml
  * @Date: 2020-11-23 20:01:09
- * @LastEditors: xml
- * @LastEditTime: 2020-11-23 22:09:42
+ * @LastEditors: xuml31350
+ * @LastEditTime: 2020-11-24 17:45:38
  * @Description: file content
  */
 
@@ -13,7 +13,7 @@ export default class UserController {
 
   /**
    * @Author: xml
-   * @description: 查询用户
+   * @description: 查询所有用户
    * @param {Koa} ctx
    * @return {*}
    */
