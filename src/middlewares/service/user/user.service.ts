@@ -4,7 +4,7 @@
  * @Author: xuml31350
  * @Date: 2020-11-18 19:55:10
  * @LastEditors: xuml31350
- * @LastEditTime: 2020-11-24 17:19:56
+ * @LastEditTime: 2020-11-25 09:07:44
  */
 import * as Koa from 'koa'
 import commonUtils from '../../common/common.utils'
@@ -39,6 +39,6 @@ export default class userService {
    */
   static async queryUser(ctx: any) {
     let data: object[] =  await userSql.queryUser();
-    return Promise.resolve(data);
+    return data;
   }
 } 
